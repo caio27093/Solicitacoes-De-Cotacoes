@@ -23,5 +23,25 @@ namespace Projeto.Controllers
             return View ( );
         }
 
+
+        public IActionResult Home ( )
+        {
+            return View ( );
+        }
+
+        public IActionResult Lista ( )
+        {
+            return View ( );
+        }
+        public IActionResult Upload ( )
+        {
+            return View ( );
+        }
+        public IActionResult CadLogin ( )
+        {
+            return View ( );
+        }
+
+
     }
 }

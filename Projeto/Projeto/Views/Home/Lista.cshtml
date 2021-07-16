@@ -1,0 +1,550 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://use.fontawesome.com/releases/v5.0.10/js/all.js'></script>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css'>
+    <meta charset="UTF-8">
+    <title>Projeto</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1,userscalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        @@import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
+        * {
+          font-family: 'Red Hat Display', sans-serif;
+        }
+        
+        html,
+        body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+        }
+        
+        /* lists */
+        .list-full, .list-full li,
+        .list-auto, .list-auto li {
+          width: 100%;
+          float: left;
+          display: block;
+          position: relative;
+        }
+        
+        .list-auto, .list-auto li {
+          width: auto;
+        }
+        
+        /* floats */
+        .alinhaLeft {
+          float: left;
+          color: #FFF;
+          text-decoration: none;
+          text-shadow: 0px 0px 0px;
+        }
+        
+        .alinhaLeft a {
+          color: #FFF;
+          text-decoration: none;
+        }
+        
+        .alinhaRight {
+          float: right;
+          background-color: #1F43BD;
+        }
+        
+        
+        header {
+          min-height: 60px;
+          position: fixed;
+          color: White;
+          top: 0;
+          right: 0;
+          left: 0;
+          border-bottom: 3px solid rgba(0, 104, 104, 0.56);
+          background: #1F43BD;
+          z-index: 2;
+        }
+        
+        header h1 {
+          padding: 10px 0 0 10px;
+        }
+        
+        header h1 a {
+          color: White;
+        }
+        
+        header ul {
+          padding: 15px 10px 0 0;
+        }
+        
+        header li {
+          border-left: 1px solid #ccc;
+        }
+        
+        header li:first-child {
+          border: none;
+        }
+        
+        header li a {
+          display: block;
+          padding: 0 10px;
+          color: #FFF;
+          /* Cor das Letras do NAV */
+          font-size: 16px;
+          line-height: 30px;
+          text-decoration: none;
+          -webkit-transition: all 300ms ease;
+          transition: all 300ms ease;
+          text-shadow: 0px 0px 0px;
+        }
+        
+        header li a:hover {
+          color: white;
+          text-decoration: none;
+          font-size: 20px;
+        }
+        
+        input#control-nav {
+          visibility: hidden;
+          position: absolute;
+          left: -9999px;
+          opacity: 0;
+        }
+        
+        /* content */
+        section {
+          padding: 80px 20px 50px;
+          border-top: 1px solid #ccc;
+          font-size: 20px;
+          line-height: 24px;
+        }
+        
+        section:after {
+          content: "";
+          display: block;
+          clear: both;
+        }
+        
+        section img {
+          width: 44%;
+          margin: 0 0 10px 4%;
+        }
+        
+        section p {
+          padding: 0 0 20px;
+        }
+        
+        .highlights {
+          position: relative;
+        }
+        
+        .highlights input {
+          visibility: hidden;
+          position: absolute;
+          left: -9999px;
+          opacity: 0;
+        }
+        
+        .highlights-item {
+          float: left;
+          margin: 0 0 0 2%;
+          width: 32%;
+          text-align: center;
+        }
+        
+        .highlights-item:first-of-type {
+          margin-left: 0;
+        }
+        
+        .highlights-item img {
+          display: block;
+          width: 100%;
+          margin: 0 0 5px;
+        }
+        
+        .highlights-item p {
+          font-size: 14px;
+        }
+        
+        .highlights-button {
+          display: inline-block;
+          padding: 10px 15px 8px;
+          cursor: pointer;
+          border-radius: 3px;
+          border: 1px solid #ccc;
+          background-color: white;
+          -webkit-transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
+          transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
+        }
+        
+        .highlights-button:hover {
+          border: 1px solid #ECECEC;
+          background-color: #CCC;
+        }
+        
+        .highlights-buttons {
+          display: none;
+          clear: both;
+          text-align: center;
+        }
+        
+        .highlights-buttons label {
+          display: inline-block;
+          width: 15px;
+          height: 15px;
+          margin: 0 10px;
+          border-radius: 10px;
+          background-color: #CCC;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          text-indent: -9999px;
+          -webkit-transition: background-color 300ms ease-in-out;
+          transition: background-color 300ms ease-in-out;
+        }
+        
+        .highlights-buttons label:hover {
+          background-color: #777;
+        }
+        
+        @@media screen and (max-width: 800px) {
+          header nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 250px;
+            border-left: 1px solid #ccc;
+            background: #fff;
+            overflow-x: auto;
+            z-index: 2;
+            -webkit-transition: all 500ms ease;
+            transition: all 500ms ease;
+            -webkit-transform: translate(100%, 0);
+            -ms-transform: translate(100%, 0);
+            transform: translate(100%, 0);
+          }
+        
+          header ul.list-auto {
+            padding: 0;
+            text-shadow: 0px 0px 0px;
+          }
+        
+          header ul.list-auto li {
+            width: 100%;
+            border: none;
+            border-width: 0 0 1px;
+          }
+        
+          .list-auto li:hover a {
+            background-color: #000066;
+          }
+        
+          header li a {
+            padding: 15px 10px;
+          }
+        
+          header li a:hover {
+            background-color: #CCC;
+          }
+        
+          .control-nav {
+            /* label icon */
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            display: block;
+            width: 30px;
+            padding: 5px 0;
+            border: solid #fff;
+            border-width: 3px 0;
+            z-index: 2;
+            cursor: pointer;
+          }
+        
+          .control-nav:before {
+            content: "";
+            display: block;
+            height: 3px;
+            background: #fff;
+          }
+        
+          .control-nav-close {
+            position: fixed;
+            /* label layer */
+            right: 0;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: block;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.4);
+            -webkit-transition: all 500ms ease;
+            transition: all 500ms ease;
+            -webkit-transform: translate(100%, 0);
+            -ms-transform: translate(100%, 0);
+            transform: translate(100%, 0);
+          }
+        
+          /* checked nav */
+          input#control-nav {
+            display: block;
+          }
+        
+          input#control-nav:focus ~ .control-nav {
+            border-color: #000;
+            box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);
+          }
+        
+          input#control-nav:focus ~ .control-nav:before {
+            background: #000;
+          }
+        
+          input#control-nav:checked ~ nav,
+          input#control-nav:checked ~ .control-nav-close {
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+          }
+        
+          header + section {
+            padding-top: 80px;
+          }
+        
+          section {
+            padding: 30px 15px 10px;
+          }
+        
+          .highlights {
+            -webkit-transition: all 500ms ease-in-out;
+            transition: all 500ms ease-in-out;
+          }
+        
+          .highlights-item {
+            width: 100%;
+            margin-left: 0;
+            position: absolute;
+            top: 0;
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transition: all 500ms ease-in-out;
+            transition: all 500ms ease-in-out;
+            -webkit-transform: scale(0.9);
+            -ms-transform: scale(0.9);
+            transform: scale(0.9);
+          }
+        
+          .highlights-item p {
+            opacity: 0;
+            -webkit-transition: opacity 500ms 500ms ease-in-out;
+            transition: opacity 500ms 500ms ease-in-out;
+          }
+        
+          .highlights-buttons {
+            display: block;
+            padding-top: 10px;
+          }
+        
+          /*checked*/
+          .highlights input:checked + div {
+            position: relative;
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+            -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+          }
+        
+          .highlights input:checked + div p {
+            opacity: 1;
+          }
+        
+          .highlights input:nth-of-type(1):checked ~ .highlights-buttons label:nth-child(1),
+          .highlights input:nth-of-type(2):checked ~ .highlights-buttons label:nth-child(2),
+          .highlights input:nth-of-type(3):checked ~ .highlights-buttons label:nth-child(3) {
+            background-color: #000;
+          }
+        
+          .modal-content {
+            padding: 10px 5%;
+            min-width: 88%;
+          }
+        }
+        @@media screen and (max-width: 480px) {
+          header h1 {
+            font-size: 20px;
+            line-height: 40px;
+          }
+        }
+        .rwd-table {
+          margin: 1em 0;
+          min-width: 300px;
+        }
+        .rwd-table tr {
+          border-top: 1px solid #ddd;
+          border-bottom: 1px solid #ddd;
+        }
+        .rwd-table th {
+          display: none;
+        }
+        .rwd-table td {
+          display: block;
+        }
+        .rwd-table td:first-child {
+          padding-top: .5em;
+        }
+        .rwd-table td:last-child {
+          padding-bottom: .5em;
+        }
+        .rwd-table td:before {
+          content: attr(data-th) ": ";
+          font-weight: bold;
+          width: 6.5em;
+          display: inline-block;
+        }
+        @@media (min-width: 480px) {
+          .rwd-table td:before {
+            display: none;
+          }
+        }
+        .rwd-table th, .rwd-table td {
+          text-align: left;
+        }
+        @@media (min-width: 480px) {
+          .rwd-table th, .rwd-table td {
+            display: table-cell;
+            padding: .25em .5em;
+          }
+          .rwd-table th:first-child, .rwd-table td:first-child {
+            padding-left: 0;
+          }
+          .rwd-table th:last-child, .rwd-table td:last-child {
+            padding-right: 0;
+          }
+        }
+        
+        body {
+          padding: 0 2em;
+          font-family: Montserrat, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          text-rendering: optimizeLegibility;
+        }
+        
+        
+        .rwd-table {
+          background: #000066;
+          color: #fff;
+          border-radius: .4em;
+          overflow: hidden;
+        }
+        .rwd-table tr {
+          border-color: #46637f;
+        }
+        .rwd-table th, .rwd-table td {
+          margin: .5em 1em;
+        }
+        @@media (min-width: 480px) {
+          .rwd-table th, .rwd-table td {
+            padding: 1em !important;
+          }
+        }
+        .rwd-table th, .rwd-table td:before {
+          color: #93CEEC;
+        }
+        
+        .wrapper {
+          margin: auto;
+          max-width: 640px;
+          padding-top: 60px;
+          text-align: center;
+        }
+        
+        .container {
+          background-color: #f9f9f9;
+          padding: 20px;
+          border-radius: 10px;
+          /*border: 0.5px solid rgba(130, 130, 130, 0.25);*/
+          /*box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1),
+                      0 0 0 1px rgba(0, 0, 0, 0.1);*/
+        }
+        
+        
+        h1 {
+          color: #130f40;
+          font-family: 'Varela Round', sans-serif;
+          letter-spacing: -.5px;
+          font-weight: 700;
+          padding-bottom: 10px;
+        }
+    </style>
+    <script>
+        $("#file-upload").css("opacity", "0");
+
+        $("#file-browser").click(function (e) {
+            e.preventDefault();
+            $("#file-upload").trigger("click");
+        });
+    </script>
+
+</head>
+<body>
+    <a id="Topo"></a>
+    <div class="content col-xs-12">
+        <header class="topo">
+            <h1 class="alinhaLeft">
+                <a href="#"> Projeto</a>
+            </h1>
+            <input type="checkbox" id="control-nav" />
+            <label for="control-nav" class="control-nav"></label>
+            <label for="control-nav" class="control-nav-close"></label>
+
+            <nav class="alinhaRight">
+                <ul class="list-auto">
+                    <li><a href="Home"><i class="fa fa-home"></i>&nbsp; Home</a></li>
+                    <li><a href="Upload"><i class="fa fa-user"></i>&nbsp; Solicitar Cotação</a></li>
+                    <li><a href="Lista"><i class="fas fa-file-alt"></i>&nbsp; Lista de Cotações Pedidas</a></li>
+                    <li><a href="Index"><i class="fas fa-sign-out-alt"></i>&nbsp; Sair</a></li>
+                </ul>
+            </nav>
+        </header>
+        <p>&nbsp;</p>
+        <div class='wrapper'>
+            <div class='container'>
+
+                <h1>Lista de Cotações</h1>
+                <table class="rwd-table">
+                    <tr>
+                        <th>Data da Solicitação</th>
+                        <th>Status</th>
+                        <th>Data da Alteração</th>
+                        <th>Cotação</th>
+                    </tr>
+                    <tr>
+                        <td data-th="Data">15/07/2021</td>
+                        <td data-th="Status">Aguardando Resposta</td>
+                        <td data-th="Data da Alteração">15/07/2021</td>
+                        <td data-th="Cotação">R$460,93</td>
+                    </tr>
+                    <tr>
+                        <td data-th="Data">14/07/2021</td>
+                        <td data-th="Status">Em análise</td>
+                        <td data-th="Data da Alteração">15/07/2021</td>
+                        <td data-th="Cotação">R$16,29</td>
+                    </tr>
+                    <tr>
+                        <td data-th="Data">13/07/2021</td>
+                        <td data-th="Status">Concluído</td>
+                        <td data-th="Data da Alteração">15/07/2021</td>
+                        <td data-th="Cotação">R$115,00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+</body>
+
+</html>
