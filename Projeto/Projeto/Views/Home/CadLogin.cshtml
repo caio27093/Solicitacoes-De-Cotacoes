@@ -1,4 +1,4 @@
-﻿
+﻿@model Projeto.Models.CadLoginViewModel
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -14,43 +14,46 @@
         * {
             font-family: 'Red Hat Display', sans-serif;
         }
+
         html, body, main {
             height: 100%;
         }
+
         #panel-left {
             display: flex !important;
             align-items: center;
             background-color: #000066;
         }
+
         #panel-right {
             display: flex !important;
             align-items: center;
             background-color: #F1F6F9;
-        
         }
-        
+
         h1 {
             color: #fff;
             font-size: 60px;
             font-weight: 900;
         }
+
         h2 {
             color: #14274E;
             font-size: 40px;
             font-weight: 700;
         }
-        
+
         .description {
             color: #fff;
             font-size: 24px;
             font-weight: 400;
         }
-        
+
         #panel-left .logo-container svg {
             width: 220px;
         }
-        
-        
+
+
         #panel-right form input {
             background-color: unset;
             border: 0;
@@ -58,7 +61,7 @@
             border-radius: 0;
             font-weight: 400;
         }
-        
+
         .btn.btn-primary {
             border: 0 !important;
             border-radius: 50px !important;
@@ -67,17 +70,16 @@
             color: #fff !important;
             font-weight: 400 !important;
         }
-        
+
         .links a {
             color: #14274E;
-        
         }
-        
+
         @@media only screen and (max-width: 767px) {
             #panel-left {
                 display: none !important;
             }
-          }
+        }
     </style>
 
 </head>
@@ -93,26 +95,46 @@
                     <h2 class="col-12 text-center">Cadastre-se</h2>
                 </div>
                 <div class="row">
-                    <form action="#" class="col-12 col-md-6 offset-md-3">
+                    @using (Html.BeginForm ( "CadastrarCliente", "Home", FormMethod.Post, new { @class = "col-12 col-md-6 offset-md-3" } ))
+                    {
+                        @Html.AntiForgeryToken( )
+                        @Html.ValidationSummary( true, "", new { @class = "text-danger" } )
+
+                        
                         <div class="form-group">
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Nome ou nome fantasia" required>
+                            @Html.EditorFor( model => model.NOME, new { htmlAttributes = new { type = "text", @class = "form-control",   placeholder = "Nome ou nome fantasia" } } )
+                            @Html.ValidationMessageFor( model => model.NOME, "", new { @class = "text-danger" } )
+
+                        </div>
+                        
+                        <div class="form-group">
+                            @Html.EditorFor( model => model.EMAIL, new { htmlAttributes = new { type = "email", @class = "form-control",   placeholder = "E-mail" } } )
+                            @Html.ValidationMessageFor( model => model.EMAIL, "", new { @class = "text-danger" } )
+
+                        </div>
+                        
+                        <div class="form-group">
+                            @Html.EditorFor( model => model.TELEFONE, new { htmlAttributes = new { type = "text", @class = "form-control",   placeholder = "Digite seu telefone" } } )
+                            @Html.ValidationMessageFor( model => model.TELEFONE, "", new { @class = "text-danger" } )
+
+                        </div>
+                        
+                        <div class="form-group">
+                            @Html.EditorFor( model => model.SENHA, new { htmlAttributes = new { type = "password", @class = "form-control",   placeholder = "Senha" } } )
+                            @Html.ValidationMessageFor( model => model.SENHA, "", new { @class = "text-danger" } )
+
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="E-mail" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="telefone" id="telefone" placeholder="Telefone" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="consenha" id="password" placeholder="Confirme sua senha" required>
+                            @Html.EditorFor( model => model.CONFIRMA_SENHA, new { htmlAttributes = new { type = "password", @class = "form-control",   placeholder = "Confirme sua senha" } } )
+                            @Html.ValidationMessageFor( model => model.CONFIRMA_SENHA, "", new { @class = "text-danger" } )
+
                         </div>
                         <div class="form-group text-center pt-4">
                             <input type="submit" class="btn btn-primary" value="Criar conta">
                         </div>
-                    </form>
+
+
+                    }
                 </div>
                 <div class="row mt-5">
                     <div class="col-12 links text-center">

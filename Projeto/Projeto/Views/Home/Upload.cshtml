@@ -499,8 +499,11 @@
 
 
                 <p>&nbsp;</p>
-                <input type="submit" class="buttonEntrar" value="Enviar">
-            </div>
+				@using (Html.BeginForm ( "CadSolicitacaoCotacao", "Home", FormMethod.Post, new { @class = "col-12 col-md-6 offset-md-3" } ))
+                {
+                    <input type="submit" class="buttonEntrar" value="Enviar">
+                }
+                </div>
 
     </body>
 </html>
