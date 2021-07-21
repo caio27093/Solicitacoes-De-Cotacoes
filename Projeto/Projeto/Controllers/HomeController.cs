@@ -422,7 +422,7 @@ namespace Projeto.Controllers
 
 
 
-                EnviaEmail ( "Solicitação de cotação", "Código do usuário" + id_pessoa_logada+" e usa o e-mail:"+Email_Pessoa_Logada, "caio.lima337@hotmail.com", u.CAMINHO );
+                EnviaEmail ( "Solicitação de cotação", "Código do usuário" + id_pessoa_logada+" e usa o e-mail:"+Email_Pessoa_Logada, "projetoSMTP27093@gmail.com", u.CAMINHO );
 
 
 
