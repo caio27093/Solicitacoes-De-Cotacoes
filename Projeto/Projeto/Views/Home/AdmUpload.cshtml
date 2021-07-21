@@ -152,55 +152,56 @@
         <section class="col-md-12" id="panel-right">
             <div class="container">
                 <div class="row mb-5">
-                    <h2 class="col-12 text-center">Cadastre-se</h2>
+                    <h2 class="col-12 text-center">Cadastre um usuário </h2>
+                    <h4>Com permissões de Administrador</h4>
                 </div>
                 <div class="row">
-                    @using (Html.BeginForm ( "CadastrarCliente", "Home", FormMethod.Post, new { @class = "col-12 col-md-6 offset-md-3" } ))
+                    @using (Html.BeginForm ( "CadastrarUserAdm", "Home", FormMethod.Post, new { @class = "col-12 col-md-6 offset-md-3" } ))
                     {
                         @Html.AntiForgeryToken( )
-                                @Html.ValidationSummary( true, "", new
-                                { @class = "text-danger"} )
-                                
-                                
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.NOME, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Nome ou nome fantasia" } } )
-                                    @Html.ValidationMessageFor( model => model.NOME, "", new { @class = "text-danger" } )
-                                
-                                </div>
-                                
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.EMAIL, new { htmlAttributes = new { type = "email", @class = "form-control", placeholder = "E-mail" } } )
-                                    @Html.ValidationMessageFor( model => model.EMAIL, "", new { @class = "text-danger" } )
-                                
-                                </div>
-                                
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.TELEFONE, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Digite seu telefone" } } )
-                                    @Html.ValidationMessageFor( model => model.TELEFONE, "", new { @class = "text-danger" } )
-                                
-                                </div>
-                                
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder = "Senha" } } )
-                                    @Html.ValidationMessageFor( model => model.SENHA, "", new { @class = "text-danger" } )
-                                
-                                </div>
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.CONFIRMA_SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder =  "Confirme sua senha" } } )
-                                    @Html.ValidationMessageFor( model => model.CONFIRMA_SENHA, "", new { @class = "text-danger" } )
-                                
-                                </div>
-                                <div class="form-group text-center pt-4">
-                                    <input type="submit" class="btn btn-primary" value="Criar conta">
-                                </div>
-                                
-                                
-                                }
+                        @Html.ValidationSummary( true, "", new
+                        { @class = "text-danger" } )
+
+
+                        <div class="form-group">
+                            @Html.EditorFor( model => model.NOME, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Nome ou nome fantasia" } } )
+                            @Html.ValidationMessageFor( model => model.NOME, "", new { @class = "text-danger" } )
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.EditorFor( model => model.EMAIL, new { htmlAttributes = new { type = "email", @class = "form-control", placeholder = "E-mail" } } )
+                            @Html.ValidationMessageFor( model => model.EMAIL, "", new { @class = "text-danger" } )
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.EditorFor( model => model.TELEFONE, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Digite seu telefone" } } )
+                            @Html.ValidationMessageFor( model => model.TELEFONE, "", new { @class = "text-danger" } )
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.EditorFor( model => model.SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder = "Senha" } } )
+                            @Html.ValidationMessageFor( model => model.SENHA, "", new { @class = "text-danger" } )
+
+                        </div>
+                        <div class="form-group">
+                            @Html.EditorFor( model => model.CONFIRMA_SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder = "Confirme sua senha" } } )
+                            @Html.ValidationMessageFor( model => model.CONFIRMA_SENHA, "", new { @class = "text-danger" } )
+
+                        </div>
+                        <div class="form-group text-center pt-4">
+                            <input type="submit" class="btn btn-primary" value="Criar conta">
+                        </div>
+
+
+                    }
                 </div>
                 <div class="row mt-5">
                     <div class="col-12 links text-center">
                         <div>
-                            <a href="Index">Entrar</a>
+                            <a href="AdmHome">Voltar</a>
                         </div>
                     </div>
                 </div>

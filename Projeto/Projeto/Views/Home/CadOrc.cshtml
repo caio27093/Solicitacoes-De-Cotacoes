@@ -1,4 +1,4 @@
-﻿@model Projeto.Models.CadLoginViewModel
+﻿@model Projeto.Models.CotacaoViewModel
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -141,6 +141,34 @@
         }
         }
     </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="https://d3a39i8rhcsf8w.cloudfront.net/js/jquery.mask.min.js"></script>
+    <script>
+        $(function () {
+            $('.cf7-money').mask('0000000.00', { reverse: true });
+            $(".cf7-uppercase").on('input', function (evt) {
+                var input = $(this);
+                var start = input[0].selectionStart;
+                $(this).val(function (_, val) {
+                    return val.toUpperCase();
+                });
+                input[0].selectionStart = input[0].selectionEnd = start;
+            });
+            $.fn.capitalize = function () {
+                $.each(this, function () {
+                    var split = this.value.split(' ');
+                    for (var i = 0, len = split.length; i < len; i++) {
+                        split[i] = split[i].charAt(0).toUpperCase() + split[i].slice(1);
+                    }
+                    this.value = split.join(' ');
+                });
+                return this;
+            };
+            $('.cf7-capitalize').on('keyup', function () {
+                $(this).capitalize();
+            }).capitalize();
+        });
+    </script>
 
 </head>
 <body class="container-fluid">
@@ -152,10 +180,10 @@
         <section class="col-md-12" id="panel-right">
             <div class="container">
                 <div class="row mb-5">
-                    <h2 class="col-12 text-center">Cadastre-se</h2>
+                    <h2 class="col-12 text-center">Insira aqui o preço da cotação</h2>
                 </div>
                 <div class="row">
-                    @using (Html.BeginForm ( "CadastrarCliente", "Home", FormMethod.Post, new { @class = "col-12 col-md-6 offset-md-3" } ))
+                    @using (Html.BeginForm ( "CadPrecOrc", "Home", FormMethod.Post, new { @class = "col-12 col-md-6 offset-md-3" } ))
                     {
                         @Html.AntiForgeryToken( )
                                 @Html.ValidationSummary( true, "", new
@@ -163,35 +191,13 @@
                                 
                                 
                                 <div class="form-group">
-                                    @Html.EditorFor( model => model.NOME, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Nome ou nome fantasia" } } )
-                                    @Html.ValidationMessageFor( model => model.NOME, "", new { @class = "text-danger" } )
+                                    @Html.EditorFor( model => model.COTACAO, new { htmlAttributes = new { type = "decimal", @class = "form-control cf7-money", placeholder = "Insira o preço aqui", id = "money" }  } )
+                                    @Html.ValidationMessageFor( model => model.COTACAO, "", new { @class = "text-danger" } )
                                 
                                 </div>
-                                
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.EMAIL, new { htmlAttributes = new { type = "email", @class = "form-control", placeholder = "E-mail" } } )
-                                    @Html.ValidationMessageFor( model => model.EMAIL, "", new { @class = "text-danger" } )
-                                
-                                </div>
-                                
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.TELEFONE, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Digite seu telefone" } } )
-                                    @Html.ValidationMessageFor( model => model.TELEFONE, "", new { @class = "text-danger" } )
-                                
-                                </div>
-                                
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder = "Senha" } } )
-                                    @Html.ValidationMessageFor( model => model.SENHA, "", new { @class = "text-danger" } )
-                                
-                                </div>
-                                <div class="form-group">
-                                    @Html.EditorFor( model => model.CONFIRMA_SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder =  "Confirme sua senha" } } )
-                                    @Html.ValidationMessageFor( model => model.CONFIRMA_SENHA, "", new { @class = "text-danger" } )
-                                
-                                </div>
+
                                 <div class="form-group text-center pt-4">
-                                    <input type="submit" class="btn btn-primary" value="Criar conta">
+                                    <input type="submit" class="btn btn-primary" value="Salvar Preço">
                                 </div>
                                 
                                 
@@ -199,9 +205,6 @@
                 </div>
                 <div class="row mt-5">
                     <div class="col-12 links text-center">
-                        <div>
-                            <a href="Index">Entrar</a>
-                        </div>
                     </div>
                 </div>
 
