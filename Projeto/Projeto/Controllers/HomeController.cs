@@ -19,17 +19,16 @@ namespace Projeto.Controllers
 {
     public class HomeController : Controller
     {
-
-
         private readonly IHostingEnvironment _hostingEnvironment;
-
-
         private readonly ILogger<HomeController> _logger;
         public static string Email_Pessoa_Logada;
         public static string Email_Pessoa_DonaChamado;
         public static int id_pessoa_logada;
         public static int nivel_acesso;
         public static int IDORC;
+        public static bool isSuccess;
+        public static string textoMensagem;
+
         public static string texto_pessoa_nao_confirmada;
         MySqlConnection connection = new MySqlConnection ( "Server=MYSQL5025.site4now.net;Database=db_a77bc2_kuuhaku;Uid=a77bc2_kuuhaku;Pwd=caio27093" );
         public HomeController ( ILogger<HomeController> logger, IHostingEnvironment hostingEnvironment )
@@ -39,14 +38,21 @@ namespace Projeto.Controllers
         }
         public IActionResult CadOrc ( )
         {
+            textoMensagem = null;
             return View ( );
         }
-        public IActionResult Index ( )
+        public ActionResult Index ( )
         {
+            if (isSuccess)
+                ViewData["success"] = textoMensagem;
+            else
+                ViewData["error"] = textoMensagem;
+
             return View ( );
         }
         public IActionResult AdmHome ( )
         {
+            textoMensagem = null;
             return View ( );
         }
         public ActionResult AdmLista ( )
@@ -54,6 +60,7 @@ namespace Projeto.Controllers
 
             try
             {
+                textoMensagem = null;
                 List<CotacaoViewModel> cot = new List<CotacaoViewModel> ( );
                 DataSet ds = new DataSet ( );
                 string selectsql = "SELECT * from COTACAO  where IND_STATUS != 3;";
@@ -111,24 +118,29 @@ namespace Projeto.Controllers
         }
         public IActionResult AdmUpload ( )
         {
+            textoMensagem = null;
             return View ( );
         }
         public IActionResult ConfirmaEmail ( )
         {
+            textoMensagem = null;
             return View ( );
         }
         public IActionResult EsqueciMinhaSenha ( )
         {
+            textoMensagem = null;
             return View ( ); 
         }
         public IActionResult Home ( )
         {
             try
             {
+                textoMensagem = null;
                 return View ( );
             }
             catch (Exception ex)
             {
+                textoMensagem = null;
                 return View ( );
             }
         }
@@ -136,6 +148,7 @@ namespace Projeto.Controllers
         {
             try
             {
+                textoMensagem = null;
                 List<CotacaoViewModel> cot = new List<CotacaoViewModel> ( );
                 DataSet ds = new DataSet ( );
                 string selectsql = "SELECT * from COTACAO  where ID_PESSOA ="+id_pessoa_logada+";";
@@ -183,6 +196,8 @@ namespace Projeto.Controllers
             }
             catch (Exception ex)
             {
+                isSuccess = false;
+                textoMensagem = "Erro ao exibir a lista, contate o administrador do sistema.";
                 return RedirectToAction ( "Index", "Home" );
             }
             finally
@@ -190,27 +205,24 @@ namespace Projeto.Controllers
                 connection.Close ( );
             }
         }
-
-
-
-
-
-
-
-
-
         public IActionResult Upload ( )
         {
+            if (isSuccess)
+                ViewData["success"] = textoMensagem;
+            else
+                ViewData["error"] = textoMensagem;
             return View ( );
         }
         public IActionResult CadLogin ( )
         {
+            textoMensagem = null;
             return View ( );
         }
         public ActionResult EsquecimentoDeSenha ( CadLoginViewModel l )
         {
             try
             {
+                textoMensagem = null;
                 if (ModelState.IsValid)
                 {
                     DataSet ds = new DataSet ( );
@@ -222,21 +234,28 @@ namespace Projeto.Controllers
                     connection.Close ( );
                     if (ds.Tables[0].Rows.Count == 0)
                     {
+
                         return RedirectToAction ( "EsqueciMinhaSenha", "Home" );
                     }
                     else
                     {
                         EnviaEmail ( "Recuperação de Senha", "Sua senha é: "+Criptografia.Decrypt( ds.Tables[0].Rows[0]["SENHA"].ToString ( )), ds.Tables[0].Rows[0]["EMAIL"].ToString ( ), null );
+                        isSuccess = true;
+                        textoMensagem = "Sua senha já foi enviada ao e-mail cadastrado";
                         return RedirectToAction ( "Index", "Home" );
                     }
                 }
                 else
                 {
+                    isSuccess = false;
+                    textoMensagem = "Erro";
                     return RedirectToAction ( "Index", "Home" );
                 }
             }
             catch (Exception ex)
             {
+                isSuccess = false;
+                textoMensagem = "Contate o administrador do sistema";
                 return RedirectToAction ( "Index", "Home" );
             }
             finally
@@ -248,6 +267,7 @@ namespace Projeto.Controllers
         {
             try
             {
+                textoMensagem = null;
                 if (ModelState.IsValid)
                 {
                     DataSet ds = new DataSet ( );
@@ -277,6 +297,8 @@ namespace Projeto.Controllers
             }
             catch (Exception ex)
             {
+                isSuccess = false;
+                textoMensagem = "Contate o administardor do sistema";
                 return RedirectToAction ( "Index", "Home" );
             }
             finally
@@ -288,6 +310,7 @@ namespace Projeto.Controllers
         {
             try
             {
+                textoMensagem = null;
                 if (ModelState.IsValid)
                 {
                     DataSet ds = new DataSet ( );
@@ -299,6 +322,8 @@ namespace Projeto.Controllers
                     connection.Close ( );
                     if (ds.Tables[0].Rows.Count == 0)
                     {
+                        isSuccess = false;
+                        textoMensagem = "E-mail não cadastrado";
                         return RedirectToAction ( "Index", "Home" );
                     }
                     else
@@ -327,6 +352,8 @@ namespace Projeto.Controllers
             }
             catch (Exception ex)
             {
+                isSuccess = false;
+                textoMensagem = "Contate o administrador do sistema";
                 return RedirectToAction ( "Index", "Home" );
             }
             finally
@@ -338,6 +365,7 @@ namespace Projeto.Controllers
         {
             try
             {
+                textoMensagem = null;
                 if (ModelState.IsValid)
                 {
                     string textoConfirma = GeraTextoDeConfirmacao ( );
@@ -357,7 +385,8 @@ namespace Projeto.Controllers
 
                     connection.Close ( );
                     EnviaEmail ( "Verificação de e-mail", "Seu código para verificação é: " + textoConfirma, l.EMAIL, null );
-
+                    isSuccess = true;
+                    textoMensagem = "Usuario com permissão de administrador cadastrado com sucesso";
                     return RedirectToAction ( "Index", "Home" );
                 }
                 else
@@ -380,6 +409,7 @@ namespace Projeto.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    textoMensagem = null;
                     string textoConfirma = GeraTextoDeConfirmacao ( );
                     string selectsql = "INSERT INTO PESSOA(NOME,EMAIL,TELEFONE,SENHA,TEXTO_CONFIRMA,TIPO_USER) VALUES (@NOME,@EMAIL,@TELEFONE,@SENHA,@TEXTO_CONFIRMA,@TIPO_USER);";
                     MySqlCommand cmd = new MySqlCommand ( selectsql, connection );
@@ -397,7 +427,8 @@ namespace Projeto.Controllers
 
                     connection.Close ( );
                     EnviaEmail ( "Verificação de e-mail", "Seu código para verificação é: " + textoConfirma ,l.EMAIL, null );
-
+                    isSuccess = true;
+                    textoMensagem = "Usuário cadastrado com sucesso";
                     return RedirectToAction ( "Index", "Home" );
                 }
                 else
@@ -424,11 +455,9 @@ namespace Projeto.Controllers
                           .ToArray ( ) );
             return result;
         }
-
-
-
         public async Task<ActionResult> CadSolicitacaoCotacao ( FileUploadModel f )
         {
+            textoMensagem = null;
             try
             {
 
@@ -462,11 +491,15 @@ namespace Projeto.Controllers
 
 
 
+                isSuccess = true;
+                textoMensagem = "Arquivo cadastrado com sucesso";
                 return RedirectToAction ( "Upload", "Home" );
             }
             catch (Exception ex)
             {
-                connection.Close ( );
+                connection.Close ( ); 
+                isSuccess = false;
+                textoMensagem = "Contate o administrador do sistema";
                 return RedirectToAction ( "Index", "Home" );
                 //throw;
             }
@@ -506,6 +539,7 @@ namespace Projeto.Controllers
         {
             try
             {
+                textoMensagem = null;
                 DataSet ds = new DataSet ( );
                 DataSet ds1 = new DataSet ( );
                 string selectsql = "UPDATE COTACAO SET IND_STATUS=2 where ID =" + Convert.ToInt32 ( id ) + " ;";
@@ -539,6 +573,7 @@ namespace Projeto.Controllers
         {
             try
             {
+                textoMensagem = null;
                 DataSet ds = new DataSet ( );
                 string selectsql = "UPDATE COTACAO SET IND_STATUS=3,COTACAO="+cot.COTACAO+" where ID =" + IDORC + " ;";
                 MySqlCommand cmd = new MySqlCommand ( selectsql, connection );

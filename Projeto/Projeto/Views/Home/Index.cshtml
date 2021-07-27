@@ -30,7 +30,7 @@
         #panel-right {
             display: flex !important;
             align-items: center;
-            background-color: #F1F6F9;
+            background-color: white;
         }
 
         h1 {
@@ -97,11 +97,11 @@
         <section class="col-md-6" id="panel-left">
             <div class="container align-self-center">
                 <div class="row">
-                    <h1 class="col-12 text-center">Lorem Ipsum</h1>
+                    <h1 class="col-12 text-center">Cotação de exames online</h1>
                 </div>
                 <div class="row">
                     <p class="col-12 text-center description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Solicite e receba cotações, datas e locais para realização dos seus exames!
                     </p>
                 </div>
                 <div class="row mt-5">
@@ -149,6 +149,17 @@
                         </div>
                     </div>
                 </div>
+                
+                @if ( ViewData["success"] != null ) 
+                {
+                    <div class="alert alert-success">@ViewData["success"]</div>
+                }
+                
+                @if ( ViewData["error"] != null ) 
+                {
+                    <div class="alert alert-danger">@ViewData["error"]</div>
+                }
+
             </div>
         </section>
 
