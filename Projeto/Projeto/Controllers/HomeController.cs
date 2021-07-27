@@ -60,7 +60,10 @@ namespace Projeto.Controllers
 
             try
             {
-                textoMensagem = null;
+                if (isSuccess)
+                    ViewData["success"] = textoMensagem;
+                else
+                    ViewData["error"] = textoMensagem;
                 List<CotacaoViewModel> cot = new List<CotacaoViewModel> ( );
                 DataSet ds = new DataSet ( );
                 string selectsql = "SELECT * from COTACAO  where IND_STATUS != 3;";
@@ -582,12 +585,16 @@ namespace Projeto.Controllers
                 MySqlDataAdapter da = new MySqlDataAdapter ( cmd );
                 da.Fill ( ds );
                 connection.Close ( ); EnviaEmail ( "Finalização de solicitação", "Sua solicitação foi realizada com sucesso agora é só entrar no site para visualizá-la", Email_Pessoa_DonaChamado, null );
+                isSuccess = true;
+                textoMensagem = "Preço da cotação cadastrado com sucesso";
                 return RedirectToAction ( "AdmLista", "Home" );
             }
             catch (Exception ex)
             {
 
-                return RedirectToAction ( "AdmHome", "Home" );
+                isSuccess = false;
+                textoMensagem = "Falha ao registrar preco";
+                return RedirectToAction ( "AdmLista", "Home" );
                 //throw;
             }
             finally
