@@ -10,11 +10,20 @@ using System.Net;
 using System.Net.Mail;
 using System.IO;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.Web;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Projeto.Controllers
 {
     public class HomeController : Controller
     {
+
+
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+
         private readonly ILogger<HomeController> _logger;
         public static string Email_Pessoa_Logada;
         public static string Email_Pessoa_DonaChamado;
@@ -22,10 +31,11 @@ namespace Projeto.Controllers
         public static int nivel_acesso;
         public static int IDORC;
         public static string texto_pessoa_nao_confirmada;
-        MySqlConnection connection = new MySqlConnection ( "DATABASE=PROJETO; port=3306; SERVER=localhost; UID=root; pwd=deidara337;" );
-        public HomeController ( ILogger<HomeController> logger )
+        MySqlConnection connection = new MySqlConnection ( "Server=MYSQL5025.site4now.net;Database=db_a77bc2_kuuhaku;Uid=a77bc2_kuuhaku;Pwd=caio27093" );
+        public HomeController ( ILogger<HomeController> logger, IHostingEnvironment hostingEnvironment )
         {
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
         }
         public IActionResult CadOrc ( )
         {
@@ -180,6 +190,15 @@ namespace Projeto.Controllers
                 connection.Close ( );
             }
         }
+
+
+
+
+
+
+
+
+
         public IActionResult Upload ( )
         {
             return View ( );
@@ -405,10 +424,27 @@ namespace Projeto.Controllers
                           .ToArray ( ) );
             return result;
         }
-        public ActionResult CadSolicitacaoCotacao (UploadViewModel u )
+
+
+
+        public async Task<ActionResult> CadSolicitacaoCotacao ( FileUploadModel f )
         {
             try
             {
+
+
+                string contentRootPath = _hostingEnvironment.WebRootPath;//ContentRootPath; content funciona bem sem estar no ar
+                var filePath = contentRootPath + "\\Arquivos\\" + f.file.FileName;
+                if (f.file.Length>0)
+                {
+                    using (var stream = new FileStream ( filePath, FileMode.Create ))
+                    {
+                        await f.file.CopyToAsync ( stream );
+ 
+                    }
+                }
+
+
                 string selectsql = "INSERT INTO COTACAO(DATA_SOLICITACAO,IND_STATUS,DATA_ALTERACAO,ID_PESSOA) VALUES (now(),1,now(),@ID_PESSOA);";
                 MySqlCommand cmd = new MySqlCommand ( selectsql, connection );
 
@@ -422,7 +458,7 @@ namespace Projeto.Controllers
 
 
 
-                EnviaEmail ( "Solicitação de cotação", "Código do usuário" + id_pessoa_logada+" e usa o e-mail:"+Email_Pessoa_Logada, "projetoSMTP27093@gmail.com", u.CAMINHO );
+                EnviaEmail ( "Solicitação de cotação", "Código do usuário" + id_pessoa_logada+" e usa o e-mail:"+Email_Pessoa_Logada, "projetoSMTP27093@gmail.com", filePath );
 
 
 
@@ -449,10 +485,12 @@ namespace Projeto.Controllers
                 msgobj.From = new MailAddress ( "projetoSMTP27093@gmail.com" );
                 msgobj.Subject = titulo;
                 msgobj.Body = corpo;
+
+
+
                 if (caminho != null)
                 {
-                    Attachment arq = new Attachment ( caminho);
-                    msgobj.Attachments.Add ( arq );
+                    msgobj.Attachments.Add (new Attachment( caminho ) );
                 }
                 client.Send ( msgobj );
 

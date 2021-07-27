@@ -2,10 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>82043a12-dc5e-4480-ba2f-3c52f49605e6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.Core" Version="2.38.1" />
     <PackageReference Include="MySql.Data" Version="8.0.25" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Arquivos\" />
+    <Folder Include="wwwroot\Arquivos\" />
   </ItemGroup>
 
 </Project>

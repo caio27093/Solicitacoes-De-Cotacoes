@@ -1,4 +1,4 @@
-﻿@model Projeto.Models.UploadViewModel
+﻿@model Projeto.Models.FileUploadModel
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -494,12 +494,6 @@
 
     </style>
     <script>
-        $("#imgInp").css("opacity", "0");
-
-        $("#file-browser").click(function (e) {
-            e.preventDefault();
-            $("#imgInp").trigger("click");
-        });
 
         $('.upload-container').each(function () {
             var label = $('label', this);
@@ -519,10 +513,6 @@
             });
         });
 
-        imgInp.onchange = (evt) => {
-           
-                alert("aa");
-        };
 
     </script>
 
@@ -552,7 +542,7 @@
         <p>&nbsp;</p>
         <div class="wrapper">
 
-            @using (Html.BeginForm ( "CadSolicitacaoCotacao", "Home", FormMethod.Post ))
+            @using (Html.BeginForm ( "CadSolicitacaoCotacao", "Home", FormMethod.Post, new { enctype = "multipart/form-data" } ))
             {
                 <div class="container">
                     <h1>Suba um arquivo</h1>
@@ -563,15 +553,31 @@
                                 <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
                                 <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
                             </div>
-                            <input type="file" id="imgInp" style="opacity:0">
 
                             <p style="opacity:0">
                                 Clique aqui para
                                 <label for="imgInp" id="file-browser">procurar</label> em seu computador.
                             </p>
 
-                            @Html.EditorFor( model => model.CAMINHO, new { htmlAttributes = new { type = "text", @class = "form-control estilizacao", placeholder = @"Por favor entre com o caminho do arquivo, ex: C:\Exemplo.pdf" } } )
-                            @Html.ValidationMessageFor( model => model.CAMINHO, "", new { @class = "text-danger" } )
+
+                            @Html.EditorFor( model => model.file, new { htmlAttributes = new { type = "file", id = "txtcaminho" } } )
+                            <!--<input type="file" id="i_file" value="">-->
+                            <br>
+                            <img src="" width="200" style="display:none;" />
+                            <br>
+                            <div id="disp_tmp_path"></div>
+
+                            <!--@@Html.EditorFor ( model => model.CAMINHO, new { htmlAttributes = new { type = "text", id = "txtcaminho" } } )
+    <script>
+        $('#i_file').change(function (event) {
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $("img").fadeIn("fast").attr('src', URL.createObjectURL(event.target.files[0]));
+
+            document.getElementById('txtcaminho').value = tmppath;
+        });
+    </script>-->
+
+
 
                         </div>
                     </div>
