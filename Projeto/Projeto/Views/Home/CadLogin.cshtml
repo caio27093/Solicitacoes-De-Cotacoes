@@ -48,6 +48,9 @@
             font-size: 24px;
             font-weight: 400;
         }
+        .invisivel {
+            display: none
+        }
 
         #panel-left .logo-container svg {
             width: 220px;
@@ -141,6 +144,16 @@
         }
         }
     </style>
+    <script>
+
+        const myModifier=0;
+        const mySpan = document.getElementById("mySpan");
+
+
+
+
+
+    </script>
 
 </head>
 <body class="container-fluid">
@@ -173,6 +186,21 @@
                                     @Html.ValidationMessageFor( model => model.EMAIL, "", new { @class = "text-danger" } )
                                 
                                 </div>
+                                <div class="form-group">
+                                    @Html.EditorFor( model => model.CONFIRMA_SENHA, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Por favor, digite novamente seu E-mail" } } )
+                                    @Html.ValidationMessageFor( model => model.CONFIRMA_SENHA, "", new { @class = "text-danger" } )
+                                
+                                </div>
+                                <div class="form-group">
+                                    @Html.EditorFor( model => model.RG, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Por favor, digite seu RG" } } )
+                                    @Html.ValidationMessageFor( model => model.RG ,"", new { @class = "text-danger" } )
+                                
+                                </div>
+                                <div class="form-group">
+                                    @Html.EditorFor( model => model.CPF, new { htmlAttributes = new { type = "numeric", @class = "form-control", placeholder = "Por favor, digite seu CPF" } } )
+                                    @Html.ValidationMessageFor( model => model.CPF, "", new { @class = "text-danger" } )
+                                
+                                </div>
                                 
                                 <div class="form-group">
                                     @Html.EditorFor( model => model.TELEFONE, new { htmlAttributes = new { type = "text", @class = "form-control", placeholder = "Digite seu telefone" } } )
@@ -181,6 +209,11 @@
                                 </div>
                                 
                                 <div class="form-group">
+                                    @Html.EditorFor( model => model.DATANASC, new { htmlAttributes = new { type = "date", @class = "form-control", placeholder = "Data de nascimento" } } )
+                                    @Html.ValidationMessageFor( model => model.DATANASC, "", new { @class = "text-danger" } )
+                                
+                                </div>
+                                <div class="form-group">
                                     @Html.EditorFor( model => model.SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder = "Senha" } } )
                                     @Html.ValidationMessageFor( model => model.SENHA, "", new { @class = "text-danger" } )
                                 
@@ -188,6 +221,17 @@
                                 <div class="form-group">
                                     @Html.EditorFor( model => model.CONFIRMA_SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder =  "Confirme sua senha" } } )
                                     @Html.ValidationMessageFor( model => model.CONFIRMA_SENHA, "", new { @class = "text-danger" } )
+                                
+                                </div>
+                                <div class="form-group">
+                                    <p>&nbsp;</p>
+                                    <!--@@{ var conveniado = false;}--> 
+                                    <input type="checkbox" onclick="mySpan.style = 'display:inline'" />
+                                    <span >É conveniado?</span>
+                                    <p>&nbsp;</p>
+                                    @Html.EditorFor( model => model.NUMCOVENIO, new { htmlAttributes = new { type = "text", @class = "form-control invisivel", id = "mySpan", placeholder ="Insira o numero do seu convênio" } } )
+                                    @Html.ValidationMessageFor( model => model.NUMCOVENIO, "", new { @class = "text-danger" } )
+                                
                                 
                                 </div>
                                 <div class="form-group text-center pt-4">

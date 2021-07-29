@@ -412,9 +412,16 @@ namespace Projeto.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (!IsCpf(l.CPF))
+                    {
+
+                        isSuccess = false;
+                        textoMensagem = "CPF invalido";
+                        return RedirectToAction ( "Index", "Home" );
+                    }
                     textoMensagem = null;
                     string textoConfirma = GeraTextoDeConfirmacao ( );
-                    string selectsql = "INSERT INTO PESSOA(NOME,EMAIL,TELEFONE,SENHA,TEXTO_CONFIRMA,TIPO_USER) VALUES (@NOME,@EMAIL,@TELEFONE,@SENHA,@TEXTO_CONFIRMA,@TIPO_USER);";
+                    string selectsql = "INSERT INTO PESSOA(NOME,EMAIL,TELEFONE,SENHA,TEXTO_CONFIRMA,TIPO_USER,CPF,RG,DATANASC,NUMCONVENIO) VALUES (@NOME,@EMAIL,@TELEFONE,@SENHA,@TEXTO_CONFIRMA,@TIPO_USER,@CPF,@RG,@DATANASC,@NUMCONVENIO);";
                     MySqlCommand cmd = new MySqlCommand ( selectsql, connection );
 
                     cmd.Parameters.Add ( new MySqlParameter ( "@NOME", l.NOME ) );
@@ -423,6 +430,10 @@ namespace Projeto.Controllers
                     cmd.Parameters.Add ( new MySqlParameter ( "@SENHA", Criptografia.Encrypt( l.SENHA) ) );
                     cmd.Parameters.Add ( new MySqlParameter ( "@TEXTO_CONFIRMA", textoConfirma ) );
                     cmd.Parameters.Add ( new MySqlParameter ( "@TIPO_USER", 2 ) );
+                    cmd.Parameters.Add ( new MySqlParameter ( "@CPF", l.CPF ) );
+                    cmd.Parameters.Add ( new MySqlParameter ( "@RG", l.RG ) );
+                    cmd.Parameters.Add ( new MySqlParameter ( "@DATANASC", Convert.ToDateTime( l.DATANASC )) );
+                    cmd.Parameters.Add ( new MySqlParameter ( "@NUMCONVENIO", l.NUMCOVENIO ) );
 
                     connection.Open ( );
 
@@ -457,6 +468,41 @@ namespace Projeto.Controllers
                           .Select ( s => s[random.Next ( s.Length )] )
                           .ToArray ( ) );
             return result;
+        }
+        public static bool IsCpf ( string cpf )
+        {
+            int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            string tempCpf;
+            string digito;
+            int soma;
+            int resto;
+            cpf = cpf.Trim ( );
+            cpf = cpf.Replace ( ".", "" ).Replace ( "-", "" );
+            if (cpf.Length != 11)
+                return false;
+            tempCpf = cpf.Substring ( 0, 9 );
+            soma = 0;
+
+            for (int i = 0; i < 9; i++)
+                soma += int.Parse ( tempCpf[i].ToString ( ) ) * multiplicador1[i];
+            resto = soma % 11;
+            if (resto < 2)
+                resto = 0;
+            else
+                resto = 11 - resto;
+            digito = resto.ToString ( );
+            tempCpf = tempCpf + digito;
+            soma = 0;
+            for (int i = 0; i < 10; i++)
+                soma += int.Parse ( tempCpf[i].ToString ( ) ) * multiplicador2[i];
+            resto = soma % 11;
+            if (resto < 2)
+                resto = 0;
+            else
+                resto = 11 - resto;
+            digito = digito + resto.ToString ( );
+            return cpf.EndsWith ( digito );
         }
         public async Task<ActionResult> CadSolicitacaoCotacao ( FileUploadModel f )
         {
