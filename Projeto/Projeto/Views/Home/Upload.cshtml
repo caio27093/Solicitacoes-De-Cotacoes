@@ -534,9 +534,8 @@
 
             <nav class="alinhaRight">
                 <ul class="list-auto">
-                    <li><a href="Home"><i class="fa fa-home"></i>&nbsp; Home</a></li>
-                    <li><a href="Upload"><i class="fa fa-user"></i>&nbsp; Solicitar Cotação</a></li>
                     <li><a href="Lista"><i class="fas fa-file-alt"></i>&nbsp; Lista de Cotações Pedidas</a></li>
+                    <li><a href="Upload"><i class="fa fa-user"></i>&nbsp; Solicitar Cotação</a></li>
                     <li><a href="index"><i class="fas fa-sign-out-alt"></i>&nbsp; Sair</a></li>
                 </ul>
             </nav>
@@ -597,12 +596,16 @@
             
                 @if ( ViewData["success"] != null ) 
                 {
-                    <div class="alert alert-success">@ViewData["success"]</div>
+                    <script>
+                        alert('@ViewData["success"]')
+                    </script>
                 }
                 
                 @if ( ViewData["error"] != null ) 
                 {
-                    <div class="alert alert-danger">@ViewData["error"]</div>
+                    <script>
+                        alert('@ViewData["error"]')
+                    </script>
                 }
 
         </div>

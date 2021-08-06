@@ -30,7 +30,7 @@ namespace Projeto.Controllers
         public static string textoMensagem;
 
         public static string texto_pessoa_nao_confirmada;
-        MySqlConnection connection = new MySqlConnection ( "Server=MYSQL5025.site4now.net;Database=db_a77bc2_kuuhaku;Uid=a77bc2_kuuhaku;Pwd=caio27093" );
+        MySqlConnection connection = new MySqlConnection ( "Server=MYSQL5040.site4now.net;Database=db_a77bac_root;Uid=a77bac_root;Pwd=Project@2021" );
         public HomeController ( ILogger<HomeController> logger, IHostingEnvironment hostingEnvironment )
         {
             _logger = logger;
@@ -244,7 +244,7 @@ namespace Projeto.Controllers
                     {
                         EnviaEmail ( "Recuperação de Senha", "Sua senha é: "+Criptografia.Decrypt( ds.Tables[0].Rows[0]["SENHA"].ToString ( )), ds.Tables[0].Rows[0]["EMAIL"].ToString ( ), null );
                         isSuccess = true;
-                        textoMensagem = "Sua senha já foi enviada ao e-mail cadastrado";
+                        textoMensagem = "Sua senha ja foi enviada ao e-mail cadastrado";
                         return RedirectToAction ( "Index", "Home" );
                     }
                 }
@@ -283,9 +283,9 @@ namespace Projeto.Controllers
                         da.Fill ( ds );
                         connection.Close ( );
                         if (nivel_acesso == 1)
-                            return RedirectToAction ( "AdmHome", "Home" );
+                            return RedirectToAction ( "AdmLista", "Home" );
                         else
-                            return RedirectToAction ( "Home", "Home" );
+                            return RedirectToAction ( "Lista", "Home" );
                     }
                     else
                     {
@@ -326,7 +326,7 @@ namespace Projeto.Controllers
                     if (ds.Tables[0].Rows.Count == 0)
                     {
                         isSuccess = false;
-                        textoMensagem = "E-mail não cadastrado";
+                        textoMensagem = "E-mail nao cadastrado";
                         return RedirectToAction ( "Index", "Home" );
                     }
                     else
@@ -338,9 +338,9 @@ namespace Projeto.Controllers
                         if (String.IsNullOrEmpty( texto_pessoa_nao_confirmada))
                         {
                             if (nivel_acesso==1)
-                                return RedirectToAction ( "AdmHome", "Home" );
+                                return RedirectToAction ( "AdmLista", "Home" );
                             else
-                                return RedirectToAction ( "Home", "Home" );
+                                return RedirectToAction ( "Lista", "Home" );
                         }
                         else
                         {
@@ -389,7 +389,7 @@ namespace Projeto.Controllers
                     connection.Close ( );
                     EnviaEmail ( "Verificação de e-mail", "Seu código para verificação é: " + textoConfirma, l.EMAIL, null );
                     isSuccess = true;
-                    textoMensagem = "Usuario com permissão de administrador cadastrado com sucesso";
+                    textoMensagem = "Usuario com permissao de administrador cadastrado com sucesso";
                     return RedirectToAction ( "Index", "Home" );
                 }
                 else
@@ -442,7 +442,7 @@ namespace Projeto.Controllers
                     connection.Close ( );
                     EnviaEmail ( "Verificação de e-mail", "Seu código para verificação é: " + textoConfirma ,l.EMAIL, null );
                     isSuccess = true;
-                    textoMensagem = "Usuário cadastrado com sucesso";
+                    textoMensagem = "Usuario cadastrado com sucesso";
                     return RedirectToAction ( "Index", "Home" );
                 }
                 else
@@ -609,7 +609,7 @@ namespace Projeto.Controllers
             catch (Exception ex)
             {
 
-                return RedirectToAction ( "AdmHome", "Home" );
+                return RedirectToAction ( "AdmLista", "Home" );
                 //throw;
             }
             finally
@@ -632,7 +632,7 @@ namespace Projeto.Controllers
                 da.Fill ( ds );
                 connection.Close ( ); EnviaEmail ( "Finalização de solicitação", "Sua solicitação foi realizada com sucesso agora é só entrar no site para visualizá-la", Email_Pessoa_DonaChamado, null );
                 isSuccess = true;
-                textoMensagem = "Preço da cotação cadastrado com sucesso";
+                textoMensagem = "Preco da cotacao cadastrado com sucesso";
                 return RedirectToAction ( "AdmLista", "Home" );
             }
             catch (Exception ex)

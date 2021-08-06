@@ -82,6 +82,30 @@
                 display: none !important;
             }
         }
+
+
+
+        .flex-box {
+            display: flex;
+        }
+
+        .container-box {
+            background-color: yellow;
+            height: 300px;
+        }
+
+        .content-box {
+            background-color: black;
+            color: white;
+            text-align: center;
+            width: 200px;
+        }
+
+
+
+
+
+
     </style>
 
     <script>
@@ -123,12 +147,12 @@
                     {
 
                         <div class="form-group">
-                            @Html.EditorFor( model => model.EMAIL, new { htmlAttributes = new { type = "email", @class = "form-control",   placeholder = "E-mail" } } )
+                            @Html.EditorFor( model => model.EMAIL, new { htmlAttributes = new { type = "email", @class = "form-control", placeholder = "E-mail" } } )
                             @Html.ValidationMessageFor( model => model.EMAIL, "", new { @class = "text-danger" } )
 
                         </div>
                         <div class="form-group">
-                            @Html.EditorFor( model => model.SENHA, new { htmlAttributes = new { type = "password", @class = "form-control",   placeholder = "Senha" } } )
+                            @Html.EditorFor( model => model.SENHA, new { htmlAttributes = new { type = "password", @class = "form-control", placeholder = "Senha" } } )
                             @Html.ValidationMessageFor( model => model.SENHA, "", new { @class = "text-danger" } )
                         </div>
                         <div class="form-group text-center pt-4">
@@ -149,15 +173,23 @@
                         </div>
                     </div>
                 </div>
-                
-                @if ( ViewData["success"] != null ) 
+
+                @if (ViewData["success"] != null)
                 {
-                    <div class="alert alert-success">@ViewData["success"]</div>
+
+                    <script>
+                        alert('@ViewData["success"]')
+                    </script>
+                    
+
                 }
-                
-                @if ( ViewData["error"] != null ) 
+
+                @if (ViewData["error"] != null)
                 {
-                    <div class="alert alert-danger">@ViewData["error"]</div>
+                    
+                    <script>
+                        alert('@ViewData["error"]')
+                    </script>
                 }
 
             </div>

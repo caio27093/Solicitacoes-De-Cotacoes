@@ -227,9 +227,9 @@
                                     <p>&nbsp;</p>
                                     <!--@@{ var conveniado = false;}--> 
                                     <input type="checkbox" onclick="mySpan.style = 'display:inline'" />
-                                    <span >É conveniado?</span>
+                                    <span>Você tem convênio?</span>
                                     <p>&nbsp;</p>
-                                    @Html.EditorFor( model => model.NUMCOVENIO, new { htmlAttributes = new { type = "text", @class = "form-control invisivel", id = "mySpan", placeholder ="Insira o numero do seu convênio" } } )
+                                    @Html.EditorFor( model => model.NUMCOVENIO, new { htmlAttributes = new { type = "text", @class = "form-control invisivel", id = "mySpan", placeholder ="Digite aqui o o numero do convênio" } } )
                                     @Html.ValidationMessageFor( model => model.NUMCOVENIO, "", new { @class = "text-danger" } )
                                 
                                 
